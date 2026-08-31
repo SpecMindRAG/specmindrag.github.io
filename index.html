@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="SpecMind: a multi-agent hybrid retrieval-augmented generation (RAG) system for spectrum intelligence, reasoning over heterogeneous FCC license, proceeding, and regulation data. Accepted at IEEE GLOBECOM 2026.">
+  <meta name="keywords" content="SpecMind, SpecBench, spectrum management, agentic AI, retrieval-augmented generation, RAG, large language models, GLOBECOM">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SpecMind: Enabling Spectrum Intelligence via Multi-Agent Hybrid Retrieval-Augmented Generation</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <style>
+    .venue-banner {
+      color: #b31b1b;
+      font-weight: 600;
+    }
+    .results-table {
+      font-size: 0.85rem;
+    }
+    .results-table th, .results-table td {
+      text-align: center;
+      vertical-align: middle;
+    }
+    .figure-caption {
+      font-size: 0.95rem;
+      color: #555;
+      margin-top: 0.75rem;
+    }
+    .equal-contrib {
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"><span class="dnerf">SpecMind</span>: Enabling Spectrum Intelligence via Multi-Agent Hybrid Retrieval-Augmented Generation</h1>
+          <h3 class="title is-4 venue-banner">IEEE GLOBECOM 2026</h3>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://swdong01.github.io">Songwei Dong</a><sup>*&nbsp;1</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/bingyan-lu-388a9a223">Bingyan Lu</a><sup>*&nbsp;2</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/makaylakienlen/">Makayla Kienlen</a><sup>3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://engineering.nd.edu/faculty/j-nicholas-laneman/">J. Nicholas Laneman</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://cshen317.github.io/">Cong Shen</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Virginia,</span>
+            <span class="author-block"><sup>2</sup>University of Notre Dame,</span>
+            <span class="author-block"><sup>3</sup>University of California, Santa Cruz</span>
+          </div>
+          <div class="equal-contrib">
+            <sup>*</sup>Equal contribution
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="./static/pdfs/specmind_globecom2026.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- TODO: uncomment and fill in the arXiv ID once the preprint is live.
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/XXXX.XXXXX"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/swdong01/SpecMind"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://github.com/swdong01/SpecMind"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>SpecBench Data</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/overview.png" alt="Overview of the SpecMind framework.">
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">SpecMind</span> is a multi-agent hybrid RAG system in which a supervisor agent
+        coordinates specialized license, proceeding, and regulation agents to retrieve and reason over
+        heterogeneous spectrum data.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            The exponential growth of wireless devices is driving unprecedented spectrum demand, pushing
+            spectrum management toward more fine-grained decisions across space, time, and device
+            constraints. As a result, spectrum policymakers and engineers must process large volumes of
+            data that come from diverse sources and take many different forms, such as text and tables.
+            These data sources are often disaggregated and require significant time and effort to
+            integrate, search, and interpret. Furthermore, most of this information is formatted for
+            human understanding and is not readily accessible to automated systems.
+          </p>
+          <p>
+            To address this challenge, we propose <span class="dnerf">SpecMind</span>, a novel
+            Multi-Agent Retrieval-Augmented Generation (RAG) system for spectrum intelligence that
+            performs reasoning over heterogeneous data sources. This system enables autonomous agents to
+            coordinate specialized sub-agents that retrieve and synthesize knowledge across policy
+            proceedings, legal regulations, and license databases. We develop
+            <span class="dnerf">SpecBench</span>, a question and answer (Q&amp;A) dataset based on
+            real-world license records and policy proceedings, addressing the lack of evaluation
+            resources for RAG systems in the spectrum domain.
+          </p>
+          <p>
+            Experimental results demonstrate that <span class="dnerf">SpecMind</span> outperforms
+            traditional, general-purposed RAG systems across spectrum-related tasks, achieving over 80%
+            win rate against strong baselines. The agent-based design enables more accurate retrieval,
+            better contextual reasoning, and improved task completion across diverse query types.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Method. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Modality-Aware Spectrum Knowledge Databases</h2>
+        <div class="content has-text-justified">
+          <p>
+            Spectrum data come in fundamentally different shapes: <b>license records</b> are structured
+            tables dominated by numerical fields, <b>FCC proceedings</b> are large collections of
+            comments with complex multi-entity interactions, and <b>regulatory texts</b> are concise,
+            legally precise documents. Instead of forcing all of them through a single semantic
+            retrieval pipeline, SpecMind builds a modality-aware database for each source: license data
+            are organized into a relational SQL database queried via text-to-SQL, proceedings are
+            modeled as entity-relation graphs with hierarchical summaries (GraphRAG), and regulations
+            are indexed with dense embeddings plus reranking.
+          </p>
+        </div>
+        <div class="has-text-centered">
+          <img src="./static/images/database.png" alt="Database construction pipeline for heterogeneous spectrum data.">
+          <p class="figure-caption">
+            Database construction pipeline for heterogeneous spectrum data.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Method. -->
+
+    <!-- Framework. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Multi-Agent Framework</h2>
+        <div class="content has-text-justified">
+          <p>
+            A <b>Supervisor Agent</b> follows a structured <i>Think&ndash;Act&ndash;Observe</i> loop:
+            it decomposes each query into subtasks, decides whether to invoke a specialized agent or
+            perform an internal operation, and iteratively updates a global task state until a final
+            answer is produced. Three specialized agents handle the heterogeneous sources: the
+            <b>License Agent</b> inspects database schemas and issues validated SQL queries, the
+            <b>Proceeding Agent</b> selects the relevant proceeding and dynamically chooses among
+            basic, local, and global graph retrieval, and the <b>Regulation Agent</b> runs a
+            high-precision retrieve-and-rerank pipeline over regulatory texts.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Framework. -->
+
+    <!-- SpecBench. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">The SpecBench Benchmark</h2>
+        <div class="content has-text-justified">
+          <p>
+            <span class="dnerf">SpecBench</span> is an expert-designed benchmark of <b>450 curated
+            question&ndash;answer pairs</b> built on real-world FCC license records, proceedings, and
+            regulations. Question types were identified through interviews with domain experts and
+            cover proceeding (31.1%), license (31.1%), regulation (13.3%), compound (14.4%), and
+            unanswerable (10.0%) queries, evaluating three core RAG capabilities: noise robustness,
+            information integration, and negative rejection.
+          </p>
+        </div>
+        <div class="has-text-centered">
+          <img src="./static/images/benchmark.png" alt="Distribution of questions in SpecBench." style="max-width: 85%;">
+          <p class="figure-caption">
+            Distribution of questions in SpecBench. The inner ring shows the proportion of questions
+            across different sources; the outer ring distinguishes single-source and multi-source questions.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ SpecBench. -->
+
+    <!-- Results. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Results</h2>
+        <div class="content has-text-justified">
+          <p>
+            SpecMind consistently outperforms Web-search RAG and SpectrumRAG across all question types
+            and both backbone LLMs, reaching an <b>81.1% overall win rate</b> and a
+            <b>99.6% success rate</b> with GPT-5.2. The gains are largest on license and compound
+            queries, where SQL-based retrieval and cross-agent coordination matter most.
+          </p>
+        </div>
+        <div class="table-container">
+          <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth results-table">
+            <thead>
+              <tr>
+                <th rowspan="2">Model</th>
+                <th rowspan="2">Method</th>
+                <th colspan="2">Proceeding</th>
+                <th colspan="2">License</th>
+                <th colspan="2">Regulation</th>
+                <th colspan="2">Compound</th>
+                <th colspan="2">Overall</th>
+              </tr>
+              <tr>
+                <th>Win</th><th>Success</th>
+                <th>Win</th><th>Success</th>
+                <th>Win</th><th>Success</th>
+                <th>Win</th><th>Success</th>
+                <th>Win</th><th>Success</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="3">Qwen3-8B</td>
+                <td>Web-search RAG</td>
+                <td>2.9</td><td>70.2</td><td>0.0</td><td>15.5</td><td>29.7</td><td>88.3</td><td>4.8</td><td>9.2</td><td>5.4</td><td>37.8</td>
+              </tr>
+              <tr>
+                <td>SpectrumRAG</td>
+                <td>12.5</td><td>71.5</td><td>0.8</td><td>6.7</td><td>6.7</td><td>52.4</td><td>0.0</td><td>0.0</td><td>6.1</td><td>42.6</td>
+              </tr>
+              <tr>
+                <td><b>SpecMind (ours)</b></td>
+                <td><b>60.4</b></td><td><b>91.8</b></td><td><b>79.3</b></td><td><b>87.9</b></td><td><b>42.0</b></td><td><b>96.7</b></td><td><b>70.5</b></td><td><b>81.7</b></td><td><b>66.2</b></td><td><b>89.8</b></td>
+              </tr>
+              <tr>
+                <td rowspan="3">GPT-5.2</td>
+                <td>Web-search RAG</td>
+                <td>4.7</td><td>78.3</td><td>0.0</td><td>25.3</td><td>38.3</td><td>95.8</td><td>8.3</td><td>13.3</td><td>7.9</td><td>50.5</td>
+              </tr>
+              <tr>
+                <td>SpectrumRAG</td>
+                <td>18.8</td><td>78.8</td><td>1.2</td><td>8.2</td><td>8.3</td><td>60.6</td><td>0.0</td><td>0.0</td><td>8.5</td><td>56.5</td>
+              </tr>
+              <tr>
+                <td><b>SpecMind (ours)</b></td>
+                <td><b>72.9</b></td><td><b>100</b></td><td><b>97.6</b></td><td><b>100</b></td><td><b>51.7</b></td><td><b>100</b></td><td><b>86.8</b></td><td><b>96.7</b></td><td><b>81.1</b></td><td><b>99.6</b></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="figure-caption has-text-centered">
+          Win rate and success rate (%) across question types under different backbone LLMs.
+          All methods score 100% success on unanswerable questions (omitted for brevity).
+        </p>
+        <div class="content has-text-justified">
+          <p>
+            Ablation studies confirm that every specialized agent matters: replacing the License Agent
+            with naive RAG drops the license win rate by <b>87.8 points</b>, and removing the
+            Proceeding Agent costs 27.3 points on proceeding questions, reflecting the importance of
+            structured and graph-based retrieval where semantic matching falls short.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Results. -->
+
+    <!-- Case study. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">How SpecMind Answers a Compound Query</h2>
+        <div class="content has-text-justified">
+          <p>
+            Consider the query: <i>&ldquo;Within the 12.7&ndash;13.25 GHz band, which frequencies are
+            allocated to satellite services? Is Intelsat an incumbent in this band, and if so, do
+            Intelsat and other incumbents share the same position on spectrum sharing with terrestrial
+            services?&rdquo;</i> The supervisor first asks the Regulation Agent to identify the relevant
+            band, then invokes the License Agent to retrieve the corresponding licensees via SQL, and
+            finally uses the Proceeding Agent's graph retrieval to compare incumbents' positions on
+            spectrum sharing &mdash; resolving inter-step dependencies through the shared task state.
+          </p>
+        </div>
+        <div class="has-text-centered">
+          <img src="./static/images/casestudy.png" alt="Case study of SpecMind on a representative compound query." style="max-width: 80%;">
+          <p class="figure-caption">
+            Case study of SpecMind on a representative compound query.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Case study. -->
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{dong2026specmind,
+  author    = {Dong, Songwei and Lu, Bingyan and Kienlen, Makayla and Laneman, J. Nicholas and Shen, Cong},
+  title     = {{SpecMind}: Enabling Spectrum Intelligence via Multi-Agent Hybrid Retrieval-Augmented Generation},
+  booktitle = {IEEE Global Communications Conference (GLOBECOM)},
+  year      = {2026},
+}</code></pre>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-4">Acknowledgments</h2>
+    <p>
+      This work was supported in part by SpectrumX, the National Science Foundation (NSF) Spectrum
+      Innovation Center, through grant AST 2132700 operated under Cooperative Agreement by the
+      University of Notre Dame. We thank our colleagues in the Notre Dame Wireless Institute for their
+      valuable contributions to data collection and evaluation, and the Notre Dame Center for Research
+      Computing for code optimization and the system user interface.
+    </p>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="./static/pdfs/specmind_globecom2026.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/swdong01/SpecMind" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This page was built using the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies
+            project page template</a>. We thank the authors for open-sourcing it.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
